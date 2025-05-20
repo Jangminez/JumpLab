@@ -4,10 +4,12 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody _rigidbody;
+    private Player player;
 
     [Header("Movement")]
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpForce;
+    [SerializeField] float jumpStamina;
     [SerializeField] LayerMask groundLayerMask;
     private Vector2 moveInput;
 
@@ -19,9 +21,11 @@ public class PlayerController : MonoBehaviour
     private float camCurXRot;
     private Vector2 mouseDelta;
 
-    void Awake()
+    public void Init(Player player)
     {
+        this.player = player;
         _rigidbody = GetComponent<Rigidbody>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void FixedUpdate()
@@ -54,6 +58,28 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up * mouseDelta.x * lookSensitivity);
     }
 
+    bool IsGrounded()
+    {
+        Ray[] rays = new Ray[4]
+        {
+            new Ray(transform.position + (transform.forward * 0.25f) + (transform.up * 0.1f), Vector3.down),
+            new Ray(transform.position + (-transform.forward * 0.25f) + (transform.up * 0.1f), Vector3.down),
+            new Ray(transform.position + (transform.forward * 0.25f) + (transform.up * 0.1f), Vector3.down),
+            new Ray(transform.position + (-transform.forward * 0.25f) + (transform.up * 0.1f), Vector3.down)
+        };
+
+        for (int i = 0; i < rays.Length; i++)
+        {
+            if (Physics.Raycast(rays[i], 0.2f, groundLayerMask))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    #region InputSystem
     void OnMove(InputValue inputValue)
     {
         moveInput = inputValue.Get<Vector2>();
@@ -70,28 +96,8 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            player.ChangeStamina(-jumpStamina);
         }
     }
-
-    bool IsGrounded()
-    {
-        Ray[] rays = new Ray[4]
-        {
-            new Ray(transform.position + (transform.forward * 0.25f) + (transform.up * 0.01f), Vector3.down),
-            new Ray(transform.position + (-transform.forward * 0.25f) + (transform.up * 0.01f), Vector3.down),
-            new Ray(transform.position + (transform.forward * 0.25f) + (transform.up * 0.01f), Vector3.down),
-            new Ray(transform.position + (-transform.forward * 0.25f) + (transform.up * 0.01f), Vector3.down)
-        };
-
-
-        for (int i = 0; i < rays.Length; i++)
-        {
-            if (Physics.Raycast(rays[i], 0.1f, groundLayerMask))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
+    #endregion
 }
