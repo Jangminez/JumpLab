@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,18 +10,25 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image hpBar;
     [SerializeField] Image staminaBar;
 
+    [Header("Item UI")]
+    [SerializeField] GameObject itemInfoUI;
+    [SerializeField] TextMeshProUGUI itemNameText;
+    [SerializeField] TextMeshProUGUI itemDescriptionText;
+
     public void Init(GameManager gameManager)
     {
         this.gameManager = gameManager;
 
-        Player.onHealthChanged += UpdateHealthUI;
-        Player.onStaminaChanged += UpdateStaminaUI;
+        PlayerStats.onHealthChanged += UpdateHealthUI;
+        PlayerStats.onStaminaChanged += UpdateStaminaUI;
+        PlayerInteractor.onInteractable += UpdateItemInfoUI;
     }
 
     void OnDestroy()
     {
-        Player.onHealthChanged -= UpdateHealthUI;
-        Player.onStaminaChanged -= UpdateStaminaUI;
+        PlayerStats.onHealthChanged -= UpdateHealthUI;
+        PlayerStats.onStaminaChanged -= UpdateStaminaUI;
+        PlayerInteractor.onInteractable -= UpdateItemInfoUI;
     }
 
     void UpdateHealthUI(float maxValue, float curValue)
@@ -31,5 +39,19 @@ public class UIManager : MonoBehaviour
     void UpdateStaminaUI(float maxValue, float curValue)
     {
         staminaBar.fillAmount = curValue / maxValue;
+    }
+
+    void UpdateItemInfoUI(string itemName, string description)
+    {
+        if (string.IsNullOrEmpty(itemName) || string.IsNullOrEmpty(description))
+        {
+            itemInfoUI.SetActive(false);
+            return;
+        }
+        
+        itemInfoUI.SetActive(true);
+
+        itemNameText.text = itemName;
+        itemDescriptionText.text = description;
     }
 }

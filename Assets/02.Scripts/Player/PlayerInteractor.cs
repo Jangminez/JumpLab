@@ -1,26 +1,52 @@
+using System;
 using UnityEngine;
 
 public class PlayerInteractor : MonoBehaviour
 {
     Camera cam;
+    Player player;
 
+    [Header("Interactor Settings")]
     [SerializeField] float interactDistance;
+    [SerializeField] float checkRate;
     [SerializeField] LayerMask interactlayerMask;
+    [SerializeField] IInteractable curInteractObject;
+    public static Action<string, string> onInteractable;
+    private float checkTimer;
 
-    void Start()
+    public void Init(Player player)
     {
+        this.player = player;
         cam = Camera.main;
     }
 
     void Update()
     {
-        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+        checkTimer += Time.deltaTime;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactlayerMask))
+        if (checkTimer > checkRate)
         {
-            // When Hit Interaction Object
-            
+            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+
+            if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactlayerMask))
+            {
+                // When Hit Interaction Object
+                if (hit.collider.TryGetComponent(out IInteractable interactable) && curInteractObject != interactable)
+                {
+                    curInteractObject = interactable;
+
+                    Tuple<string, string> itemInfo = interactable.GetItemInfo();
+                    onInteractable?.Invoke(itemInfo.Item1, itemInfo.Item2);
+                }
+            }
+
+            else
+            {
+                curInteractObject = null;
+                onInteractable?.Invoke(null, null);
+            }
+
+            checkTimer = 0f;
         }
     }
-
 }

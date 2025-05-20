@@ -96,7 +96,15 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            player.ChangeStamina(-jumpStamina);
+            player.UseStamina(jumpStamina);
+        }
+    }
+
+    void OnInteract(InputValue inputValue)
+    {
+        if (inputValue.isPressed)
+        {
+            
         }
     }
     #endregion
