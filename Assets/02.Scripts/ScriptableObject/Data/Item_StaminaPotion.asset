@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 232c6aa4063f73c4d984d8531ecf54e3, type: 3}
-  m_Name: Item_Key
+  m_Name: Item_StaminaPotion
   m_EditorClassIdentifier: 
-  itemName: Key
-  itemIcon: {fileID: 21300000, guid: a6c10312421cb5e438d8b9edaad2db28, type: 3}
-  description: It can open something
+  itemName: Stamina Potion
+  itemIcon: {fileID: 21300000, guid: f65023889763c7644b5579f0b019da6b, type: 3}
+  description: Recovery Stamina +20
   itemType: 0
-  dropPrefab: {fileID: 2840154391166374707, guid: 533900c57bdcea54794ac5b108784d3e, type: 3}
-  canStack: 0
-  maxAmount: 0
+  dropPrefab: {fileID: 5966774757470692347, guid: c6a318399e6cb9946a0b3f2888a37d7f, type: 3}
+  canStack: 1
+  maxAmount: 10

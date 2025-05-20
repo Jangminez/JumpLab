@@ -62,8 +62,8 @@ public class PlayerController : MonoBehaviour
     {
         Ray[] rays = new Ray[4]
         {
-            new Ray(transform.position + (transform.forward * 0.25f) + (transform.up * 0.1f), Vector3.down),
-            new Ray(transform.position + (-transform.forward * 0.25f) + (transform.up * 0.1f), Vector3.down),
+            new Ray(transform.position + (transform.right * 0.25f) + (transform.up * 0.1f), Vector3.down),
+            new Ray(transform.position + (-transform.right * 0.25f) + (transform.up * 0.1f), Vector3.down),
             new Ray(transform.position + (transform.forward * 0.25f) + (transform.up * 0.1f), Vector3.down),
             new Ray(transform.position + (-transform.forward * 0.25f) + (transform.up * 0.1f), Vector3.down)
         };
@@ -94,7 +94,10 @@ public class PlayerController : MonoBehaviour
     {
         if (inputValue.isPressed && IsGrounded())
         {
-            _rigidbody.velocity = Vector3.zero;
+            var velocity = _rigidbody.velocity;
+            velocity.y = 0;
+            _rigidbody.velocity = velocity;
+    
             _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             player.UseStamina(jumpStamina);
         }
@@ -104,7 +107,7 @@ public class PlayerController : MonoBehaviour
     {
         if (inputValue.isPressed)
         {
-            
+            player.InteractItem();
         }
     }
     #endregion

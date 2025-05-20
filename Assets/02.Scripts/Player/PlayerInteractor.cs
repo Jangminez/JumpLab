@@ -42,11 +42,22 @@ public class PlayerInteractor : MonoBehaviour
 
             else
             {
-                curInteractObject = null;
-                onInteractable?.Invoke(null, null);
+                if (curInteractObject != null)
+                {
+                    curInteractObject = null;
+                    onInteractable?.Invoke(null, null);
+                }
             }
 
             checkTimer = 0f;
+        }
+    }
+
+    public void InteractItem()
+    {
+        if (curInteractObject != null)
+        {
+            curInteractObject.InteractItem();
         }
     }
 }

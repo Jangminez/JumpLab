@@ -29,4 +29,9 @@ public class Player : MonoBehaviour
     {
         playerStats.ChangeHealth(value);
     }
+
+    public void InteractItem()
+    {
+        playerInteractor.InteractItem();
+    }
 }

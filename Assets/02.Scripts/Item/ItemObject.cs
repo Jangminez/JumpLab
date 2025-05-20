@@ -25,15 +25,7 @@ public class ItemObject : MonoBehaviour, IInteractable
 
     public void InteractItem()
     {
-        switch (dataSO.itemType)
-        {
-            case ItemType.Comsumable:
-
-                break;
-
-            case ItemType.Equipable:
-            
-                break;
-        }
+        // Add Item in ToolBar
+        Destroy(gameObject);
     }
 }

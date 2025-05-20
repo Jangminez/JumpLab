@@ -6,6 +6,12 @@ public enum ItemType
     Equipable,
 }
 
+public enum PotionType
+{
+    Health,
+    Stamina
+}
+
 [CreateAssetMenu(fileName = "Item", menuName = "Item/New Item")]
 public class ItemData : ScriptableObject
 {
@@ -20,4 +26,8 @@ public class ItemData : ScriptableObject
     [Header("Stacking")]
     public bool canStack;
     public int maxAmount;
+
+    [Header("Potion")]
+    public PotionType potionType;
+    public float value;
 }
