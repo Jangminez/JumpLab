@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -97,7 +98,7 @@ public class PlayerController : MonoBehaviour
             var velocity = _rigidbody.velocity;
             velocity.y = 0;
             _rigidbody.velocity = velocity;
-    
+
             _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             player.UseStamina(jumpStamina);
         }
@@ -108,6 +109,14 @@ public class PlayerController : MonoBehaviour
         if (inputValue.isPressed)
         {
             player.InteractItem();
+        }
+    }
+
+    void OnUseItem(InputValue inputValue)
+    {
+        if (inputValue.isPressed)
+        {
+            GameManager.Instance.UseItem();
         }
     }
     #endregion

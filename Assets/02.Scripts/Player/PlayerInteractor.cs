@@ -10,8 +10,9 @@ public class PlayerInteractor : MonoBehaviour
     [SerializeField] float interactDistance;
     [SerializeField] float checkRate;
     [SerializeField] LayerMask interactlayerMask;
-    [SerializeField] IInteractable curInteractObject;
+    [SerializeField] GameObject curInteractObject;
     public static Action<string, string> onInteractable;
+    public static Action<ItemData> onGetItem;
     private float checkTimer;
 
     public void Init(Player player)
@@ -30,10 +31,9 @@ public class PlayerInteractor : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactlayerMask))
             {
-                // When Hit Interaction Object
-                if (hit.collider.TryGetComponent(out IInteractable interactable) && curInteractObject != interactable)
+                if (hit.collider.TryGetComponent(out IInteractable interactable) && curInteractObject != hit.collider.gameObject)
                 {
-                    curInteractObject = interactable;
+                    curInteractObject = hit.collider.gameObject;
 
                     Tuple<string, string> itemInfo = interactable.GetItemInfo();
                     onInteractable?.Invoke(itemInfo.Item1, itemInfo.Item2);
@@ -55,9 +55,14 @@ public class PlayerInteractor : MonoBehaviour
 
     public void InteractItem()
     {
-        if (curInteractObject != null)
+        if (curInteractObject == null) return;
+         
+        if (curInteractObject.TryGetComponent(out IInteractable interactable))
         {
-            curInteractObject.InteractItem();
+            interactable.InteractItem();
+
+            curInteractObject = null;
+            onInteractable?.Invoke(null, null);
         }
     }
 }

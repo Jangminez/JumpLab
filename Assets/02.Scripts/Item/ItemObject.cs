@@ -25,7 +25,7 @@ public class ItemObject : MonoBehaviour, IInteractable
 
     public void InteractItem()
     {
-        // Add Item in ToolBar
+        PlayerInteractor.onGetItem?.Invoke(dataSO);
         Destroy(gameObject);
     }
 }
