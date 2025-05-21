@@ -10,18 +10,17 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
 
-        uIManager = GetComponentInChildren<UIManager>();
+
         Player = FindObjectOfType<Player>();
         ToolBar = FindObjectOfType<ToolBar>();
-
-        if (uIManager)
-            uIManager.Init(this);
+        uIManager = GetComponentInChildren<UIManager>();
 
         if (Player)
             Player.Init(this);
-
         if (ToolBar)
-            ToolBar.Init();
+            ToolBar.Init(this);
+        if (uIManager)
+            uIManager.Init(this);
     }
 
     public void UseItem()

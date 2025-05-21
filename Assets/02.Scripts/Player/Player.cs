@@ -6,10 +6,12 @@ public class Player : MonoBehaviour
     PlayerController playerController;
     PlayerInteractor playerInteractor;
     PlayerStats playerStats;
-
+    public PlayerEventHandler Events { get; private set; }
     public void Init(GameManager gameManager)
     {
         this.gameManager = gameManager;
+
+        Events = new PlayerEventHandler();
 
         playerController = GetComponent<PlayerController>();
         playerInteractor = GetComponent<PlayerInteractor>();
@@ -20,7 +22,7 @@ public class Player : MonoBehaviour
         if (playerInteractor)
             playerInteractor.Init(this);
         if (playerStats)
-            playerStats.Init();
+            playerStats.Init(this);
     }
 
     public void HealStamina(float value)
@@ -45,7 +47,7 @@ public class Player : MonoBehaviour
 
     public void InteractItem()
     {
-        playerInteractor.InteractItem();
+        playerInteractor.GetItem();
     }
 
     public void UseItem()

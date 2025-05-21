@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    Player player;
+
     [Header("PlayerStats")]
     [SerializeField] float maxHealth;
     [SerializeField] float health;
@@ -14,11 +16,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] float regenRate;
 
     bool isDie = false;
-    public static Action<float, float> onHealthChanged;
-    public static Action<float, float> onStaminaChanged;
 
-    public void Init()
+    public void Init(Player player)
     {
+        this.player = player;
+
         health = maxHealth;
         stamina = maxStamina;
         
@@ -39,7 +41,7 @@ public class PlayerStats : MonoBehaviour
     public void ChangeHealth(float value)
     {
         health = Mathf.Clamp(health + value, 0f, maxHealth);
-        onHealthChanged?.Invoke(maxHealth, health);
+        player.Events.RaisedHealthChanged(maxHealth, health);
 
         if (health <= 0f)
         {
@@ -50,12 +52,11 @@ public class PlayerStats : MonoBehaviour
     public void ChangeStamina(float value)
     {
         stamina = Mathf.Clamp(stamina + value, 0f, maxStamina);
-        onStaminaChanged?.Invoke(maxStamina, stamina);
+        player.Events.RaisedStaminaChanged(maxStamina, stamina);
     }
 
     void Die()
     {
-        // When Player Die
         isDie = true;
     }
 }

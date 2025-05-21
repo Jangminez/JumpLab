@@ -25,7 +25,7 @@ public class ItemObject : MonoBehaviour, IInteractable
 
     public void InteractItem()
     {
-        PlayerInteractor.onGetItem?.Invoke(dataSO);
+        GameManager.Instance.Player.Events.RasiedGetItem(dataSO);
         Destroy(gameObject);
     }
 }

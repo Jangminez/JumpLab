@@ -1,17 +1,22 @@
-using System.IO.Pipes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ToolBar : MonoBehaviour
 {
+    GameManager gameManager;
+    PlayerEventHandler playerEvents;
+
     [SerializeField] ItemSlot[] itemSlots;
     [SerializeField] ItemSlot selectedSlot;
     [SerializeField] InputAction selectSlotAction;
     [SerializeField] Transform itemContainer;
     private ItemData selectedItemSO;
 
-    public void Init()
+    public void Init(GameManager gameManager)
     {
+        this.gameManager = gameManager;
+        playerEvents = gameManager.Player.Events;
+
         itemSlots = GetComponentsInChildren<ItemSlot>();
 
         foreach (ItemSlot slot in itemSlots)
@@ -21,17 +26,16 @@ public class ToolBar : MonoBehaviour
 
         selectedSlot = itemSlots[0];
         selectedSlot.SelectSlot();
-    }
-    void OnEnable()
-    {
-        PlayerInteractor.onGetItem += AddItemToSlot;
+
+        // Subscribe Events
+        playerEvents.onGetItem += AddItemToSlot;
         selectSlotAction.started += OnSelectSlot;
         selectSlotAction.Enable();
     }
 
     void OnDestroy()
     {
-        PlayerInteractor.onGetItem -= AddItemToSlot;
+        playerEvents.onGetItem -= AddItemToSlot;
         selectSlotAction.started -= OnSelectSlot;
         selectSlotAction.Disable();
     }
@@ -44,6 +48,8 @@ public class ToolBar : MonoBehaviour
 
         if (obj.TryGetComponent(out Rigidbody rb))
             rb.isKinematic = true;
+        if (obj.TryGetComponent(out Collider col))
+            col.enabled = false;
     }
 
     public void ClearHand()

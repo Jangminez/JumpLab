@@ -11,8 +11,6 @@ public class PlayerInteractor : MonoBehaviour
     [SerializeField] float checkRate;
     [SerializeField] LayerMask interactlayerMask;
     [SerializeField] GameObject curInteractObject;
-    public static Action<string, string> onInteractable;
-    public static Action<ItemData> onGetItem;
     private float checkTimer;
 
     public void Init(Player player)
@@ -36,7 +34,7 @@ public class PlayerInteractor : MonoBehaviour
                     curInteractObject = hit.collider.gameObject;
 
                     Tuple<string, string> itemInfo = interactable.GetItemInfo();
-                    onInteractable?.Invoke(itemInfo.Item1, itemInfo.Item2);
+                    player.Events.RaisedInteracted(itemInfo.Item1, itemInfo.Item2);
                 }
             }
 
@@ -45,7 +43,7 @@ public class PlayerInteractor : MonoBehaviour
                 if (curInteractObject != null)
                 {
                     curInteractObject = null;
-                    onInteractable?.Invoke(null, null);
+                    player.Events.RaisedInteracted(null, null);
                 }
             }
 
@@ -53,16 +51,16 @@ public class PlayerInteractor : MonoBehaviour
         }
     }
 
-    public void InteractItem()
+    public void GetItem()
     {
         if (curInteractObject == null) return;
-         
+
         if (curInteractObject.TryGetComponent(out IInteractable interactable))
         {
             interactable.InteractItem();
 
             curInteractObject = null;
-            onInteractable?.Invoke(null, null);
+            player.Events.RaisedInteracted(null, null);
         }
     }
 }
