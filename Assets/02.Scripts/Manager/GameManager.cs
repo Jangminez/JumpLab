@@ -1,11 +1,10 @@
-using System.Data.Common;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private UIManager uIManager;
     public Player Player { get; private set; }
-    public ItemData SelectItemSO { get; private set; }
+    public ToolBar ToolBar { get; private set; }
 
     protected override void Awake()
     {
@@ -13,22 +12,20 @@ public class GameManager : Singleton<GameManager>
 
         uIManager = GetComponentInChildren<UIManager>();
         Player = FindObjectOfType<Player>();
+        ToolBar = FindObjectOfType<ToolBar>();
 
         if (uIManager)
             uIManager.Init(this);
 
         if (Player)
-            Player.Init();
-    }
+            Player.Init(this);
 
-    public void SelectItem(ItemData data)
-    {
-        SelectItemSO = data;
+        if (ToolBar)
+            ToolBar.Init();
     }
 
     public void UseItem()
     {
-        if (SelectItemSO != null)
-            SelectItemSO.UseItem(Player);
+        ToolBar.UseItem(Player);
     }
 }

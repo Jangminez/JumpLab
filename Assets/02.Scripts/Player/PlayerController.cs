@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
     {
         if (inputValue.isPressed)
         {
-            GameManager.Instance.UseItem();
+            player.UseItem();
         }
     }
     #endregion

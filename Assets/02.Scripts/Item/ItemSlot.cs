@@ -10,7 +10,7 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] Image itemIcon;
     [SerializeField] Outline outline;
     private Color myColor;
-    public int Quantity { get; private set; }
+    private int quantity;
 
     public void Init(ToolBar toolBar)
     {
@@ -35,15 +35,15 @@ public class ItemSlot : MonoBehaviour
         if (dataSO != data)
         {
             dataSO = data;
-            Quantity = 1;
+            quantity = 1;
         }
         else
         {
-            Quantity += 1;
+            quantity += 1;
         }
 
         quantityText.gameObject.SetActive(dataSO.canStack);
-        quantityText.text = Quantity.ToString();
+        quantityText.text = quantity.ToString();
 
         itemIcon.gameObject.SetActive(true);
         itemIcon.sprite = data.itemIcon;
@@ -52,7 +52,7 @@ public class ItemSlot : MonoBehaviour
     public void ClearSlot()
     {
         dataSO = null;
-        Quantity = 0;
+        quantity = 0;
         quantityText.gameObject.SetActive(false);
         itemIcon.gameObject.SetActive(false);
     }
@@ -72,11 +72,22 @@ public class ItemSlot : MonoBehaviour
         outline.effectColor = myColor;
     }
 
-    public bool CanSetItem(ItemData data)
+    public void UseItem()
+    {
+        quantity -= 1;
+
+        if (quantity == 0)
+        {
+            ClearSlot();
+            toolBar.ClearHand();
+        }
+    }
+
+    public bool CanAddItem(ItemData data)
     {
         if (dataSO != null)
         {
-            if (data == dataSO && Quantity < dataSO.maxAmount)
+            if (data == dataSO && quantity < dataSO.maxAmount)
                 return true;
             else
                 return false;

@@ -19,3 +19,5 @@ MonoBehaviour:
   dropPrefab: {fileID: 4744494006658951387, guid: 22d93af6f33edb24ebe58c528c2b31c2, type: 3}
   canStack: 1
   maxAmount: 10
+  potionType: 0
+  value: 30

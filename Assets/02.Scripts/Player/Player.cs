@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    GameManager gameManager;
     PlayerController playerController;
     PlayerInteractor playerInteractor;
     PlayerStats playerStats;
 
-    public void Init()
+    public void Init(GameManager gameManager)
     {
+        this.gameManager = gameManager;
+
         playerController = GetComponent<PlayerController>();
         playerInteractor = GetComponent<PlayerInteractor>();
         playerStats = GetComponent<PlayerStats>();
@@ -43,5 +46,10 @@ public class Player : MonoBehaviour
     public void InteractItem()
     {
         playerInteractor.InteractItem();
+    }
+
+    public void UseItem()
+    {
+        gameManager.UseItem();
     }
 }

@@ -1,3 +1,4 @@
+using System.IO.Pipes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,9 +8,9 @@ public class ToolBar : MonoBehaviour
     [SerializeField] ItemSlot selectedSlot;
     [SerializeField] InputAction selectSlotAction;
     [SerializeField] Transform itemContainer;
-    public ItemData selectedItemSO;
+    private ItemData selectedItemSO;
 
-    void Awake()
+    public void Init()
     {
         itemSlots = GetComponentsInChildren<ItemSlot>();
 
@@ -30,8 +31,9 @@ public class ToolBar : MonoBehaviour
 
     void OnDestroy()
     {
-        selectSlotAction.started -= OnSelectSlot;
         PlayerInteractor.onGetItem -= AddItemToSlot;
+        selectSlotAction.started -= OnSelectSlot;
+        selectSlotAction.Disable();
     }
 
     public void SelectSlot(ItemData data)
@@ -46,7 +48,7 @@ public class ToolBar : MonoBehaviour
 
     public void ClearHand()
     {
-        if (itemContainer.childCount != 0)
+        if (itemContainer.childCount > 0)
             Destroy(itemContainer.GetChild(0).gameObject);
     }
 
@@ -56,7 +58,7 @@ public class ToolBar : MonoBehaviour
 
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].CanSetItem(data))
+            if (itemSlots[i].CanAddItem(data))
             {
                 slot = itemSlots[i];
                 slot.SetSlot(data);
@@ -79,24 +81,49 @@ public class ToolBar : MonoBehaviour
         Instantiate(data.dropPrefab, Camera.main.transform.position + Vector3.forward * 2, Quaternion.identity);
     }
 
-    # region InputAction
+    public void UseItem(Player player)
+    {
+        if (selectedItemSO == null) return;
+
+        switch (selectedItemSO.itemType)
+        {
+            case ItemType.Comsumable:
+                if (selectedItemSO.potionType == PotionType.Health)
+                    player.HealHealth(selectedItemSO.value);
+                else
+                    player.HealStamina(selectedItemSO.value);
+                break;
+
+            case ItemType.Equipable:
+                Debug.Log("Equip Item");
+                break;
+        }
+
+        selectedSlot.UseItem();
+    }
+
+    #region InputAction
     public void OnSelectSlot(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
         {
-            int keyNum = int.Parse(context.control.name);
-            int slotIdx = keyNum - 1 != -1 ? keyNum - 1 : itemSlots.Length - 1;
+            string keyString = context.control.name;
 
-            ItemSlot slot = itemSlots[slotIdx];
-
-            if (selectedSlot != null && selectedSlot != slot)
+            if (int.TryParse(keyString, out int keyNum))
             {
-                selectedSlot.DeSelectSlot();
-                ClearHand();
-            }
+                int slotIdx = keyNum - 1 != -1 ? keyNum - 1 : itemSlots.Length - 1;
 
-            selectedSlot = slot;
-            selectedSlot.SelectSlot();
+                ItemSlot slot = itemSlots[slotIdx];
+
+                if (selectedSlot != null && selectedSlot != slot)
+                {
+                    selectedSlot.DeSelectSlot();
+                    ClearHand();
+                }
+
+                selectedSlot = slot;
+                selectedSlot.SelectSlot();
+            }
         }
     }
     #endregion
