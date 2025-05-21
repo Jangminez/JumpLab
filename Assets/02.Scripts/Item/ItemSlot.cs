@@ -75,7 +75,8 @@ public class ItemSlot : MonoBehaviour
     public void UseItem()
     {
         quantity -= 1;
-
+        quantityText.text = quantity.ToString();
+        
         if (quantity == 0)
         {
             ClearSlot();

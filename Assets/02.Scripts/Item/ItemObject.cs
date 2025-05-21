@@ -14,8 +14,7 @@ public interface IInteractable
 
 public class ItemObject : MonoBehaviour, IInteractable
 {
-    [SerializeField] ItemData dataSO;
-
+    public ItemData dataSO;
 
     public Tuple<string, string> GetItemInfo()
     {
@@ -25,7 +24,6 @@ public class ItemObject : MonoBehaviour, IInteractable
 
     public void InteractItem()
     {
-        GameManager.Instance.Player.Events.RasiedGetItem(dataSO);
         Destroy(gameObject);
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,10 +5,9 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody _rigidbody;
     private Player player;
+    private PlayerStats playerStats;
 
     [Header("Movement")]
-    [SerializeField] float moveSpeed;
-    [SerializeField] float jumpForce;
     [SerializeField] float jumpStamina;
     [SerializeField] LayerMask groundLayerMask;
     private Vector2 moveInput;
@@ -22,9 +20,11 @@ public class PlayerController : MonoBehaviour
     private float camCurXRot;
     private Vector2 mouseDelta;
 
-    public void Init(Player player)
+    public void Init(Player player, PlayerStats playerStats)
     {
         this.player = player;
+        this.playerStats = playerStats;
+        
         _rigidbody = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -44,8 +44,8 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = transform.right * moveInput.x + transform.forward * moveInput.y;
 
         Vector3 velocity = _rigidbody.velocity;
-        velocity.x = direction.x * moveSpeed;
-        velocity.z = direction.z * moveSpeed;
+        velocity.x = direction.x * playerStats.MoveSpeed;
+        velocity.z = direction.z * playerStats.MoveSpeed;
 
         _rigidbody.velocity = velocity;
     }
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
             velocity.y = 0;
             _rigidbody.velocity = velocity;
 
-            _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            _rigidbody.AddForce(Vector3.up * playerStats.JumpForce, ForceMode.Impulse);
             player.UseStamina(jumpStamina);
         }
     }

@@ -57,6 +57,9 @@ public class PlayerInteractor : MonoBehaviour
 
         if (curInteractObject.TryGetComponent(out IInteractable interactable))
         {
+            if (curInteractObject.TryGetComponent(out ItemObject obj))
+                player.Events.RasiedGetItem(obj.dataSO);
+
             interactable.InteractItem();
 
             curInteractObject = null;

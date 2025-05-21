@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private GameManager gameManager;
-    private PlayerEventHandler playerEvents;
+    private Player player;
+
 
     [Header("PlayerUI")]
     [SerializeField] Image hpBar;
@@ -16,21 +17,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI itemNameText;
     [SerializeField] TextMeshProUGUI itemDescriptionText;
 
-    public void Init(GameManager gameManager)
+    public void Init(GameManager gameManager, Player player)
     {
         this.gameManager = gameManager;
-        playerEvents = gameManager.Player.Events;
+        this.player = player;
 
-        playerEvents.onHealthChanged += UpdateHealthUI;
-        playerEvents.onStaminaChanged += UpdateStaminaUI;
-        playerEvents.onInteractable += UpdateItemInfoUI;
+        player.Events.onHealthChanged += UpdateHealthUI;
+        player.Events.onStaminaChanged += UpdateStaminaUI;
+        player.Events.onInteractable += UpdateItemInfoUI;
     }
 
     void OnDestroy()
     {
-        playerEvents.onHealthChanged += UpdateHealthUI;
-        playerEvents.onStaminaChanged += UpdateStaminaUI;
-        playerEvents.onInteractable += UpdateItemInfoUI;
+        player.Events.onHealthChanged -= UpdateHealthUI;
+        player.Events.onStaminaChanged -= UpdateStaminaUI;
+        player.Events.onInteractable -= UpdateItemInfoUI;
     }
 
     void UpdateHealthUI(float maxValue, float curValue)

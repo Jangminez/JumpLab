@@ -1,10 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ToolBar : MonoBehaviour
 {
     GameManager gameManager;
-    PlayerEventHandler playerEvents;
+    Player player;
 
     [SerializeField] ItemSlot[] itemSlots;
     [SerializeField] ItemSlot selectedSlot;
@@ -12,10 +13,10 @@ public class ToolBar : MonoBehaviour
     [SerializeField] Transform itemContainer;
     private ItemData selectedItemSO;
 
-    public void Init(GameManager gameManager)
+    public void Init(GameManager gameManager, Player player)
     {
         this.gameManager = gameManager;
-        playerEvents = gameManager.Player.Events;
+        this.player = player;
 
         itemSlots = GetComponentsInChildren<ItemSlot>();
 
@@ -28,14 +29,14 @@ public class ToolBar : MonoBehaviour
         selectedSlot.SelectSlot();
 
         // Subscribe Events
-        playerEvents.onGetItem += AddItemToSlot;
+        player.Events.onGetItem += AddItemToSlot;
         selectSlotAction.started += OnSelectSlot;
         selectSlotAction.Enable();
     }
 
     void OnDestroy()
     {
-        playerEvents.onGetItem -= AddItemToSlot;
+        player.Events.onGetItem -= AddItemToSlot;
         selectSlotAction.started -= OnSelectSlot;
         selectSlotAction.Disable();
     }
@@ -87,17 +88,14 @@ public class ToolBar : MonoBehaviour
         Instantiate(data.dropPrefab, Camera.main.transform.position + Vector3.forward * 2, Quaternion.identity);
     }
 
-    public void UseItem(Player player)
+    public void UseItem()
     {
         if (selectedItemSO == null) return;
 
         switch (selectedItemSO.itemType)
         {
             case ItemType.Comsumable:
-                if (selectedItemSO.potionType == PotionType.Health)
-                    player.HealHealth(selectedItemSO.value);
-                else
-                    player.HealStamina(selectedItemSO.value);
+                StartCoroutine(ApplyPotionEffect(selectedItemSO));
                 break;
 
             case ItemType.Equipable:
@@ -106,6 +104,15 @@ public class ToolBar : MonoBehaviour
         }
 
         selectedSlot.UseItem();
+    }
+
+    IEnumerator ApplyPotionEffect(ItemData data)
+    {
+        player.SetStats(data.statType, data.value);
+
+        yield return new WaitForSeconds(data.duration);
+
+        player.SetStats(data.statType, -data.value);
     }
 
     #region InputAction

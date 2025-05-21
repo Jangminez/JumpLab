@@ -15,6 +15,12 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] float regenStamina;
     [SerializeField] float regenRate;
 
+    [Header("MovementStats")]
+    [SerializeField] float moveSpeed;
+    [SerializeField] float jumpForce;
+    public float MoveSpeed { get => moveSpeed; }
+    public float JumpForce { get => jumpForce; }
+
     bool isDie = false;
 
     public void Init(Player player)
@@ -23,7 +29,7 @@ public class PlayerStats : MonoBehaviour
 
         health = maxHealth;
         stamina = maxStamina;
-        
+
         StartCoroutine(RegenStats());
     }
 
@@ -53,6 +59,16 @@ public class PlayerStats : MonoBehaviour
     {
         stamina = Mathf.Clamp(stamina + value, 0f, maxStamina);
         player.Events.RaisedStaminaChanged(maxStamina, stamina);
+    }
+
+    public void ChangeSpeed(float value)
+    {
+        moveSpeed += value;
+    }
+    
+    public void ChangeJumpForce(float value)
+    {
+        jumpForce += value;
     }
 
     void Die()

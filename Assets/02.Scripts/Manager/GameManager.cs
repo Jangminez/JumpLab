@@ -3,28 +3,23 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private UIManager uIManager;
-    public Player Player { get; private set; }
-    public ToolBar ToolBar { get; private set; }
+    [SerializeField] private ItemManager itemManager;
+    private Player player;
+    private ToolBar toolBar;
 
     protected override void Awake()
     {
         base.Awake();
 
-
-        Player = FindObjectOfType<Player>();
-        ToolBar = FindObjectOfType<ToolBar>();
+        player = FindObjectOfType<Player>();
+        toolBar = FindObjectOfType<ToolBar>();
         uIManager = GetComponentInChildren<UIManager>();
 
-        if (Player)
-            Player.Init(this);
-        if (ToolBar)
-            ToolBar.Init(this);
+        if (player)
+            player.Init(this, toolBar);
+        if (toolBar)
+            toolBar.Init(this, player);
         if (uIManager)
-            uIManager.Init(this);
-    }
-
-    public void UseItem()
-    {
-        ToolBar.UseItem(Player);
+            uIManager.Init(this, player);    
     }
 }

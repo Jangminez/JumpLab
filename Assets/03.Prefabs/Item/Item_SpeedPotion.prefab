@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5703421605557977850}
   - component: {fileID: 392258718534289622}
   m_Layer: 7
-  m_Name: Item_StaminaPotion
+  m_Name: Item_SpeedPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

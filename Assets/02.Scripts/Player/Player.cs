@@ -3,41 +3,34 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     GameManager gameManager;
+    ToolBar toolBar;
     PlayerController playerController;
     PlayerInteractor playerInteractor;
     PlayerStats playerStats;
     public PlayerEventHandler Events { get; private set; }
-    public void Init(GameManager gameManager)
+    public void Init(GameManager gameManager, ToolBar toolBar)
     {
         this.gameManager = gameManager;
+        this.toolBar = toolBar;
 
         Events = new PlayerEventHandler();
 
+        playerStats = GetComponent<PlayerStats>();
         playerController = GetComponent<PlayerController>();
         playerInteractor = GetComponent<PlayerInteractor>();
-        playerStats = GetComponent<PlayerStats>();
 
-        if (playerController)
-            playerController.Init(this);
-        if (playerInteractor)
-            playerInteractor.Init(this);
         if (playerStats)
             playerStats.Init(this);
-    }
+        if (playerController)
+            playerController.Init(this, playerStats);
+        if (playerInteractor)
+            playerInteractor.Init(this);
 
-    public void HealStamina(float value)
-    {
-        playerStats.ChangeStamina(value);
     }
 
     public void UseStamina(float value)
     {
         playerStats.ChangeStamina(-value);
-    }
-
-    public void HealHealth(float value)
-    {
-        playerStats.ChangeHealth(value);
     }
 
     public void TakeDamaged(float value)
@@ -52,6 +45,20 @@ public class Player : MonoBehaviour
 
     public void UseItem()
     {
-        gameManager.UseItem();
+        toolBar.UseItem();
+    }
+
+    public void SetStats(StatType type, float value)
+    {
+        switch (type)
+        {
+            case StatType.Speed:
+                playerStats.ChangeSpeed(value);
+                break;
+
+            case StatType.Jump:
+                playerStats.ChangeJumpForce(value);
+                break;
+        }
     }
 }

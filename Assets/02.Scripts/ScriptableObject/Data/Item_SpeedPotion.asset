@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 232c6aa4063f73c4d984d8531ecf54e3, type: 3}
-  m_Name: Item_StaminaPotion
+  m_Name: Item_SpeedPotion
   m_EditorClassIdentifier: 
-  itemName: Stamina Potion
+  itemName: "\uC774\uB3D9\uC18D\uB3C4 \uAC15\uD654 \uD3EC\uC158"
   itemIcon: {fileID: 21300000, guid: f65023889763c7644b5579f0b019da6b, type: 3}
-  description: Recovery Stamina +20
+  description: "\uC774\uB3D9\uC18D\uB3C4\uB97C 10\uCD08\uAC04 \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
   itemType: 0
   dropPrefab: {fileID: 5966774757470692347, guid: c6a318399e6cb9946a0b3f2888a37d7f, type: 3}
   canStack: 1
   maxAmount: 10
-  potionType: 1
-  value: 15
+  statType: 0
+  value: 3
+  duration: 10

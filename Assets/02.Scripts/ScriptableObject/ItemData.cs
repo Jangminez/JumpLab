@@ -6,10 +6,10 @@ public enum ItemType
     Equipable,
 }
 
-public enum PotionType
+public enum StatType
 {
-    Health,
-    Stamina
+    Speed,
+    Jump
 }
 
 [CreateAssetMenu(fileName = "Item", menuName = "Item/New Item")]
@@ -27,24 +27,8 @@ public class ItemData : ScriptableObject
     public bool canStack;
     public int maxAmount;
 
-    [Header("Potion")]
-    public PotionType potionType;
+    [Header("Stat")]
+    public StatType statType;
     public float value;
-
-    public void UseItem(Player player)
-    {
-        switch (itemType)
-        {
-            case ItemType.Comsumable:
-                if (potionType == PotionType.Health)
-                    player.HealHealth(value);
-                else
-                    player.HealStamina(value);
-                break;
-
-            case ItemType.Equipable:
-                Debug.Log("Equip Item");
-                break;
-        }
-    }
+    public float duration;
 }
