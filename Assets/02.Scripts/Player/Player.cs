@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
 
     public void UseItem()
     {
-        toolBar.UseItem();
+        gameManager.ApplyItemEffect();
     }
 
     public void SetStats(StatType type, float value)

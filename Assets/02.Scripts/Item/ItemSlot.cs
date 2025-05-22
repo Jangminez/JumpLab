@@ -11,6 +11,7 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] Outline outline;
     private Color myColor;
     private int quantity;
+    private bool isEquip;
 
     public void Init(ToolBar toolBar)
     {
@@ -75,12 +76,24 @@ public class ItemSlot : MonoBehaviour
 
     public void UseItem()
     {
-        quantity -= 1;
-        quantityText.text = quantity.ToString();
-
-        if (quantity <= 0)
+        switch (dataSO.itemType)
         {
-            ClearSlot();
+            case ItemType.Comsumable:
+                quantity -= 1;
+                quantityText.text = quantity.ToString();
+
+                if (quantity <= 0)
+                {
+                    ClearSlot();
+                }
+                break;
+
+            case ItemType.Equipable:
+                isEquip = !isEquip;
+
+                quantityText.text = "E";
+                quantityText.gameObject.SetActive(isEquip);
+                break;
         }
     }
 

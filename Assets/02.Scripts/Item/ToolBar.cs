@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -48,7 +47,14 @@ public class ToolBar : MonoBehaviour
                 rb.isKinematic = true;
             if (obj.TryGetComponent(out Collider col))
                 col.enabled = false;
+
+            gameManager.SetItemData(selectedItemSO);
         }
+    }
+
+    public void UseSlotItem()
+    {
+        selectedSlot.UseItem();
     }
 
     public void ClearHand()
@@ -58,8 +64,8 @@ public class ToolBar : MonoBehaviour
             Destroy(itemContainer.GetChild(0).gameObject);
         }
 
-
         selectedItemSO = null;
+        gameManager.SetItemData(selectedItemSO);
     }
 
     void AddItemToSlot(ItemData data)
@@ -89,33 +95,6 @@ public class ToolBar : MonoBehaviour
     void DropItem(ItemData data)
     {
         Instantiate(data.dropPrefab, Camera.main.transform.position + Vector3.forward * 2, Quaternion.identity);
-    }
-
-    public void UseItem()
-    {
-        if (selectedItemSO == null) return;
-
-        switch (selectedItemSO.itemType)
-        {
-            case ItemType.Comsumable:
-                StartCoroutine(ApplyPotionEffect(selectedItemSO));
-                break;
-
-            case ItemType.Equipable:
-                Debug.Log("Equip Item");
-                break;
-        }
-
-        selectedSlot.UseItem();
-    }
-
-    IEnumerator ApplyPotionEffect(ItemData data)
-    {
-        player.SetStats(data.statType, data.value);
-
-        yield return new WaitForSeconds(data.duration);
-
-        player.SetStats(data.statType, -data.value);
     }
 
     #region InputAction
