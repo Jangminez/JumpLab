@@ -9,7 +9,6 @@ public class ToolBar : MonoBehaviour
 
     [SerializeField] ItemSlot[] itemSlots;
     [SerializeField] ItemSlot selectedSlot;
-    [SerializeField] InputAction selectSlotAction;
     [SerializeField] Transform itemContainer;
     private ItemData selectedItemSO;
 
@@ -30,15 +29,11 @@ public class ToolBar : MonoBehaviour
 
         // Subscribe Events
         player.Events.onGetItem += AddItemToSlot;
-        selectSlotAction.started += OnSelectSlot;
-        selectSlotAction.Enable();
     }
 
     void OnDestroy()
     {
         player.Events.onGetItem -= AddItemToSlot;
-        selectSlotAction.started -= OnSelectSlot;
-        selectSlotAction.Disable();
     }
 
     public void SelectSlot(ItemData data)
@@ -140,5 +135,4 @@ public class ToolBar : MonoBehaviour
         }
     }
     #endregion
-
 }

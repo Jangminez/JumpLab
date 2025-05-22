@@ -17,7 +17,7 @@ public class ItemSlot : MonoBehaviour
         this.toolBar = toolBar;
 
         quantityText = GetComponentInChildren<TextMeshProUGUI>();
-        itemIcon =  transform.GetChild(0).GetComponent<Image>();
+        itemIcon = transform.GetChild(0).GetComponent<Image>();
         outline = GetComponent<Outline>();
 
         if (quantityText)
@@ -27,7 +27,7 @@ public class ItemSlot : MonoBehaviour
             itemIcon.gameObject.SetActive(false);
 
         if (outline)
-                myColor = outline.effectColor;
+            myColor = outline.effectColor;
     }
 
     public void SetSlot(ItemData data)
@@ -76,7 +76,7 @@ public class ItemSlot : MonoBehaviour
     {
         quantity -= 1;
         quantityText.text = quantity.ToString();
-        
+
         if (quantity == 0)
         {
             ClearSlot();

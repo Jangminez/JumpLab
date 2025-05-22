@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 8438075}
   - component: {fileID: 8438078}
   - component: {fileID: 8438077}
-  - component: {fileID: 8438076}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -157,27 +156,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1192289187}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8438076
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8438074}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &8438077
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3037,95 +3015,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSlots: []
   selectedSlot: {fileID: 0}
-  selectSlotAction:
-    m_Name: Select Slot
-    m_Type: 1
-    m_ExpectedControlType: Button
-    m_Id: 6f6100c7-03d6-43d2-b78c-4cdaa4161a7f
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 1b203e82-618d-4a60-baab-6ae84fed2f7f
-      m_Path: <Keyboard>/1
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select Slot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: e54ac333-26f2-4cea-8cb7-5e44dd8d6369
-      m_Path: <Keyboard>/2
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select Slot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: d97f6004-39d4-46de-9ab1-ef7f0caebef9
-      m_Path: <Keyboard>/3
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select Slot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: f333f64b-61a7-4095-a6e3-ed919c8a0d1c
-      m_Path: <Keyboard>/4
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select Slot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 91c8e220-0470-4ebf-bff0-eca41d33f82a
-      m_Path: <Keyboard>/5
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select Slot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 425fef61-741d-4479-9405-6810797fe98d
-      m_Path: <Keyboard>/6
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select Slot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 5bab7caf-782f-4f3a-9326-cf7ca6feea9a
-      m_Path: <Keyboard>/7
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select Slot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 6143093e-9d79-43e4-87d0-add8624c569f
-      m_Path: <Keyboard>/8
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select Slot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: fe6b2893-25ab-4a68-a31d-3e898c78f3ca
-      m_Path: <Keyboard>/9
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select Slot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 0bae2146-dca7-41f9-9b37-74084c840a34
-      m_Path: <Keyboard>/0
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select Slot
-      m_Flags: 0
-    m_Flags: 0
   itemContainer: {fileID: 1466341465}
 --- !u!1 &1108765933
 GameObject:
@@ -3354,6 +3243,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1192289187}
+  - component: {fileID: 1192289188}
+  - component: {fileID: 1192289189}
   m_Layer: 0
   m_Name: JumpingPlatform
   m_TagString: Untagged
@@ -3370,13 +3261,47 @@ Transform:
   m_GameObject: {fileID: 1192289186}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.159341, y: 6.12, z: 9.09281}
+  m_LocalPosition: {x: 4.159341, y: 6.05, z: 9.09281}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8438075}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1192289188
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192289186}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1192289189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192289186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d6844a7f7e8cad4f9a299c396e5b113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 300
 --- !u!1 &1203381533
 GameObject:
   m_ObjectHideFlags: 0
@@ -3978,7 +3903,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5966774757470692347, guid: c6a318399e6cb9946a0b3f2888a37d7f, type: 3}
       propertyPath: m_Name
-      value: Item_StaminaPotion (2)
+      value: Item_SpeedPotion (2)
       objectReference: {fileID: 0}
     - target: {fileID: 6488029430079788281, guid: c6a318399e6cb9946a0b3f2888a37d7f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4943,7 +4868,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5966774757470692347, guid: c6a318399e6cb9946a0b3f2888a37d7f, type: 3}
       propertyPath: m_Name
-      value: Item_StaminaPotion (1)
+      value: Item_SpeedPotion (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6488029430079788281, guid: c6a318399e6cb9946a0b3f2888a37d7f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6921,7 +6846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4744494006658951387, guid: 22d93af6f33edb24ebe58c528c2b31c2, type: 3}
       propertyPath: m_Name
-      value: Item_HealthPotion
+      value: Item_JumpPotion
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7708,7 +7633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: d2581dfec10604c4bb4e56209b22246b, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -7719,7 +7644,103 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5866666020207973022}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5268447e-ca91-424a-b87d-e74a69bfc106
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5866666020207973022}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e6c15ce6-1bdb-4099-a014-6d01891fbda6
+    m_ActionName: Player/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5866666020207973022}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 212567b6-bc44-458f-9e7e-d869b7692915
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5866666020207973022}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 80958c78-d89c-4554-a885-4ad28e264073
+    m_ActionName: Player/Interact[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5866666020207973022}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnUseItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7c5732ca-7950-4d56-b7e6-3611210139de
+    m_ActionName: Player/UseItem[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 977984549}
+        m_TargetAssemblyTypeName: ToolBar, Assembly-CSharp
+        m_MethodName: OnSelectSlot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c0ba2b31-2b7d-4e80-ad9c-ab38a24b49f1
+    m_ActionName: Player/SelectSlot[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5,/Keyboard/6,/Keyboard/7,/Keyboard/8,/Keyboard/9,/Keyboard/0]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -8540,7 +8561,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5966774757470692347, guid: c6a318399e6cb9946a0b3f2888a37d7f, type: 3}
       propertyPath: m_Name
-      value: Item_StaminaPotion
+      value: Item_SpeedPotion
       objectReference: {fileID: 0}
     - target: {fileID: 6488029430079788281, guid: c6a318399e6cb9946a0b3f2888a37d7f, type: 3}
       propertyPath: m_LocalPosition.x

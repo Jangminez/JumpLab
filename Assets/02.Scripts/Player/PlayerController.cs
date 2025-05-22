@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         this.player = player;
         this.playerStats = playerStats;
-        
+
         _rigidbody = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -63,10 +63,10 @@ public class PlayerController : MonoBehaviour
     {
         Ray[] rays = new Ray[4]
         {
-            new Ray(transform.position + (transform.right * 0.25f) + (transform.up * 0.1f), Vector3.down),
-            new Ray(transform.position + (-transform.right * 0.25f) + (transform.up * 0.1f), Vector3.down),
-            new Ray(transform.position + (transform.forward * 0.25f) + (transform.up * 0.1f), Vector3.down),
-            new Ray(transform.position + (-transform.forward * 0.25f) + (transform.up * 0.1f), Vector3.down)
+            new Ray(transform.position + (transform.right * 0.1f) + (transform.up * 0.1f), Vector3.down),
+            new Ray(transform.position + (-transform.right * 0.1f) + (transform.up * 0.1f), Vector3.down),
+            new Ray(transform.position + (transform.forward * 0.1f) + (transform.up * 0.1f), Vector3.down),
+            new Ray(transform.position + (-transform.forward * 0.1f) + (transform.up * 0.1f), Vector3.down)
         };
 
         for (int i = 0; i < rays.Length; i++)
@@ -81,19 +81,23 @@ public class PlayerController : MonoBehaviour
     }
 
     #region InputSystem
-    void OnMove(InputValue inputValue)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = inputValue.Get<Vector2>();
+        if (context.phase == InputActionPhase.Performed)
+            moveInput = context.ReadValue<Vector2>();
+
+        if (context.phase == InputActionPhase.Canceled)
+            moveInput = Vector2.zero;
     }
 
-    void OnLook(InputValue inputValue)
+    public void OnLook(InputAction.CallbackContext context)
     {
-        mouseDelta = inputValue.Get<Vector2>();
+        mouseDelta = context.ReadValue<Vector2>();
     }
 
-    void OnJump(InputValue inputValue)
+    public void OnJump(InputAction.CallbackContext context)
     {
-        if (inputValue.isPressed && IsGrounded())
+        if (context.phase == InputActionPhase.Started && IsGrounded())
         {
             var velocity = _rigidbody.velocity;
             velocity.y = 0;
@@ -104,17 +108,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnInteract(InputValue inputValue)
+    public void OnInteract(InputAction.CallbackContext context)
     {
-        if (inputValue.isPressed)
+        if (context.phase == InputActionPhase.Started)
         {
             player.InteractItem();
         }
     }
 
-    void OnUseItem(InputValue inputValue)
+    public void OnUseItem(InputAction.CallbackContext context)
     {
-        if (inputValue.isPressed)
+        if (context.phase == InputActionPhase.Started)
         {
             player.UseItem();
         }
