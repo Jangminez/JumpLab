@@ -123,5 +123,16 @@ public class PlayerController : MonoBehaviour
             player.UseItem();
         }
     }
+
+    public void OnChangeCam(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            if (cameraContainer.TryGetComponent(out ChangeCam changeCam))
+            {
+                changeCam.ChangeCamera();
+            }
+        }
+    }
     #endregion
 }
