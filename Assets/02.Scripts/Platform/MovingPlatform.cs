@@ -51,11 +51,22 @@ public class MovingPlatform : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        contactObjects.Add(col.collider);
+        foreach (var contact in col.contacts)
+        {
+            if (contact.point.y > transform.position.y + 0.01f)
+            {
+                if (!contactObjects.Contains(col.collider))
+                    contactObjects.Add(col.collider);
+
+                break;
+            }
+        }
+
     }
 
     void OnCollisionExit(Collision col)
     {
-        contactObjects.Remove(col.collider);
+        if (contactObjects.Contains(col.collider))
+            contactObjects.Remove(col.collider);
     }
 }

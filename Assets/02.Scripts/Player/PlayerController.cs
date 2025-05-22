@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask groundLayerMask;
     private Vector2 moveInput;
     private int jumpCount;
+    private bool isGrabed;
 
     [Header("Look")]
     [SerializeField] Transform cameraContainer;
@@ -30,6 +31,18 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    void Update()
+    {
+        if (isGrabed)
+        {
+            Ray ray = new Ray(transform.position + Vector3.up * 0.1f, transform.forward);
+
+            if (!Physics.Raycast(ray, 1f, groundLayerMask))
+            {
+                ReleaseGrab();
+            }
+        }
+    }
     void FixedUpdate()
     {
         Move();
@@ -42,13 +55,25 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        Vector3 direction = transform.right * moveInput.x + transform.forward * moveInput.y;
+        if (!isGrabed)
+        {
+            Vector3 direction = transform.right * moveInput.x + transform.forward * moveInput.y;
 
-        Vector3 velocity = _rigidbody.velocity;
-        velocity.x = direction.x * playerStats.MoveSpeed;
-        velocity.z = direction.z * playerStats.MoveSpeed;
+            Vector3 velocity = _rigidbody.velocity;
+            velocity.x = direction.x * playerStats.MoveSpeed;
+            velocity.z = direction.z * playerStats.MoveSpeed;
 
-        _rigidbody.velocity = velocity;
+            _rigidbody.velocity = velocity;
+        }
+        else
+        {
+            Vector3 direction = transform.up * moveInput.y;
+
+            Vector3 velocity = _rigidbody.velocity;
+
+            velocity.y = direction.y * playerStats.MoveSpeed;
+            _rigidbody.velocity = velocity;
+        }
     }
 
     void CameraLook()
@@ -93,6 +118,12 @@ public class PlayerController : MonoBehaviour
         }
 
         return false;
+    }
+
+    void ReleaseGrab()
+    {
+        isGrabed = false;
+        _rigidbody.useGravity = true;
     }
 
     #region InputSystem
@@ -146,6 +177,22 @@ public class PlayerController : MonoBehaviour
             if (cameraContainer.TryGetComponent(out ChangeCam changeCam))
             {
                 changeCam.ChangeCamera();
+            }
+        }
+    }
+
+    public void OnGrabWall(InputAction.CallbackContext context)
+    {
+        Ray ray = new Ray(transform.position + Vector3.up * 1.5f, transform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f, groundLayerMask))
+        {
+            if (hit.normal.y < 0.5f)
+            {
+                isGrabed = !isGrabed;
+
+                _rigidbody.useGravity = !isGrabed;
+                _rigidbody.velocity = Vector3.zero;
             }
         }
     }
