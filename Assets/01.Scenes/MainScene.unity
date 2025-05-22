@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 8438075}
   - component: {fileID: 8438078}
   - component: {fileID: 8438077}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 76984599}
-  - component: {fileID: 76984600}
   m_Layer: 0
   m_Name: FristPersonTr
   m_TagString: MainCamera
@@ -315,14 +314,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 515626404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &76984600
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76984598}
-  m_Enabled: 1
 --- !u!1 &150149101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,13 +1540,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 583868016}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
+  m_LocalRotation: {x: 0.1564345, y: 0, z: 0, w: 0.98768836}
   m_LocalPosition: {x: 0, y: 2, z: -4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 515626404}
-  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 18, y: 0, z: 0}
 --- !u!1 &587733744
 GameObject:
   m_ObjectHideFlags: 0
@@ -3334,7 +3325,7 @@ GameObject:
   - component: {fileID: 1192289187}
   - component: {fileID: 1192289188}
   - component: {fileID: 1192289189}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: JumpingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3737,7 +3728,7 @@ GameObject:
   - component: {fileID: 1383866522}
   - component: {fileID: 1383866524}
   - component: {fileID: 1383866523}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4271,7 +4262,7 @@ GameObject:
   - component: {fileID: 1606108200}
   - component: {fileID: 1606108199}
   - component: {fileID: 1606108201}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MovingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4327,8 +4318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2233e5cddef76444859a9cfc26e541f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  moveDistance: {x: 20, y: 10, z: 0}
+  moveDistance: {x: -10, y: 0, z: 0}
   duration: 10
 --- !u!1 &1650884552
 GameObject:
@@ -8080,6 +8070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 020719da153799b4eb6e118df1d024e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rayStartTr: {fileID: 515626404}
   interactDistance: 3
   checkRate: 0.1
   interactlayerMask:

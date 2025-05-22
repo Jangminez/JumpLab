@@ -7,6 +7,7 @@ public class PlayerInteractor : MonoBehaviour
     Player player;
 
     [Header("Interactor Settings")]
+    [SerializeField] Transform rayStartTr; 
     [SerializeField] float interactDistance;
     [SerializeField] float checkRate;
     [SerializeField] LayerMask interactlayerMask;
@@ -25,7 +26,7 @@ public class PlayerInteractor : MonoBehaviour
 
         if (checkTimer > checkRate)
         {
-            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+            Ray ray = new Ray(rayStartTr.position, rayStartTr.forward);
 
             if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactlayerMask))
             {

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
@@ -6,6 +7,8 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] Vector3 moveDistance;
     [SerializeField] float duration;
     bool isMoved = false;
+    List<Collider> contactObjects = new List<Collider>();
+
     void Start()
     {
         StartCoroutine(MovePlatformCoroutine());
@@ -26,11 +29,33 @@ public class MovingPlatform : MonoBehaviour
                 elapse += Time.deltaTime;
                 float t = Mathf.Clamp01(elapse / duration);
 
-                transform.position = Vector3.Lerp(startPos, targetPos, t);
+                Vector3 newPos = Vector3.Lerp(startPos, targetPos, t);
+                Vector3 deltaPos = newPos - transform.position;
+
+                transform.position = newPos;
+
+                foreach (var obj in contactObjects)
+                {
+                    Rigidbody rb = obj.attachedRigidbody;
+
+                    if (rb != null)
+                        rb.MovePosition(rb.position + deltaPos);
+                }
+
                 yield return null;
             }
 
             transform.position = targetPos;
         }
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        contactObjects.Add(col.collider);
+    }
+
+    void OnCollisionExit(Collision col)
+    {
+        contactObjects.Remove(col.collider);
     }
 }
