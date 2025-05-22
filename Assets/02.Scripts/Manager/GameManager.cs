@@ -45,6 +45,10 @@ public class GameManager : Singleton<GameManager>
             case ItemType.Equipable:
                 ApplyEquipItem(itemDataSO);
                 break;
+
+            case ItemType.Interactable:
+                
+                break;
         }
 
         toolBar.UseSlotItem();

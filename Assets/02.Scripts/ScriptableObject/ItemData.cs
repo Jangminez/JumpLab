@@ -4,6 +4,7 @@ public enum ItemType
 {
     Comsumable,
     Equipable,
+    Interactable
 }
 
 public enum StatType

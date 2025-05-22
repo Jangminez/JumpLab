@@ -94,6 +94,9 @@ public class ItemSlot : MonoBehaviour
                 quantityText.text = "E";
                 quantityText.gameObject.SetActive(isEquip);
                 break;
+
+            case ItemType.Interactable:
+                break;
         }
     }
 
