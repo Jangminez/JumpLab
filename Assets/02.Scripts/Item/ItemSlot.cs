@@ -55,6 +55,7 @@ public class ItemSlot : MonoBehaviour
         quantity = 0;
         quantityText.gameObject.SetActive(false);
         itemIcon.gameObject.SetActive(false);
+        toolBar.ClearHand();
     }
 
     public void SelectSlot()
@@ -77,10 +78,9 @@ public class ItemSlot : MonoBehaviour
         quantity -= 1;
         quantityText.text = quantity.ToString();
 
-        if (quantity == 0)
+        if (quantity <= 0)
         {
             ClearSlot();
-            toolBar.ClearHand();
         }
     }
 

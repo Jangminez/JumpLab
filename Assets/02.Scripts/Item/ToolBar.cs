@@ -38,20 +38,28 @@ public class ToolBar : MonoBehaviour
 
     public void SelectSlot(ItemData data)
     {
-        selectedItemSO = data;
+        if (selectedItemSO != data)
+        {
+            selectedItemSO = data;
 
-        GameObject obj = Instantiate(data.dropPrefab, itemContainer);
+            GameObject obj = Instantiate(data.dropPrefab, itemContainer);
 
-        if (obj.TryGetComponent(out Rigidbody rb))
-            rb.isKinematic = true;
-        if (obj.TryGetComponent(out Collider col))
-            col.enabled = false;
+            if (obj.TryGetComponent(out Rigidbody rb))
+                rb.isKinematic = true;
+            if (obj.TryGetComponent(out Collider col))
+                col.enabled = false;
+        }
     }
 
     public void ClearHand()
     {
         if (itemContainer.childCount > 0)
+        {
             Destroy(itemContainer.GetChild(0).gameObject);
+        }
+
+
+        selectedItemSO = null;
     }
 
     void AddItemToSlot(ItemData data)

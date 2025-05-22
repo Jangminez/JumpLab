@@ -9,7 +9,8 @@ public enum ItemType
 public enum StatType
 {
     Speed,
-    Jump
+    Jump,
+    DoubleJump
 }
 
 [CreateAssetMenu(fileName = "Item", menuName = "Item/New Item")]

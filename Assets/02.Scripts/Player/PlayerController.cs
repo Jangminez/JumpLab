@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpStamina;
     [SerializeField] LayerMask groundLayerMask;
     private Vector2 moveInput;
+    private int jumpCount;
 
     [Header("Look")]
     [SerializeField] Transform cameraContainer;
@@ -59,19 +60,33 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up * mouseDelta.x * lookSensitivity);
     }
 
+    void Jump()
+    {
+        if (jumpStamina <= playerStats.Stamina && jumpCount < playerStats.MaxJumpCount)
+        {
+            var velocity = _rigidbody.velocity;
+            velocity.y = 0;
+            _rigidbody.velocity = velocity;
+
+            _rigidbody.AddForce(Vector3.up * playerStats.JumpForce, ForceMode.Impulse);
+            player.UseStamina(jumpStamina);
+            jumpCount++;
+        }
+    }
+
     bool IsGrounded()
     {
         Ray[] rays = new Ray[4]
         {
-            new Ray(transform.position + (transform.right * 0.1f) + (transform.up * 0.1f), Vector3.down),
-            new Ray(transform.position + (-transform.right * 0.1f) + (transform.up * 0.1f), Vector3.down),
-            new Ray(transform.position + (transform.forward * 0.1f) + (transform.up * 0.1f), Vector3.down),
-            new Ray(transform.position + (-transform.forward * 0.1f) + (transform.up * 0.1f), Vector3.down)
+            new Ray(transform.position + (transform.right * 0.1f) + (transform.up * 0.05f), Vector3.down),
+            new Ray(transform.position + (-transform.right * 0.1f) + (transform.up * 0.05f), Vector3.down),
+            new Ray(transform.position + (transform.forward * 0.1f) + (transform.up * 0.05f), Vector3.down),
+            new Ray(transform.position + (-transform.forward * 0.1f) + (transform.up * 0.05f), Vector3.down)
         };
 
         for (int i = 0; i < rays.Length; i++)
         {
-            if (Physics.Raycast(rays[i], 0.2f, groundLayerMask))
+            if (Physics.Raycast(rays[i], 0.1f, groundLayerMask))
             {
                 return true;
             }
@@ -97,14 +112,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started && IsGrounded())
+        if (context.phase == InputActionPhase.Started)
         {
-            var velocity = _rigidbody.velocity;
-            velocity.y = 0;
-            _rigidbody.velocity = velocity;
+            if (IsGrounded())
+            {
+                jumpCount = 0;
+            }
 
-            _rigidbody.AddForce(Vector3.up * playerStats.JumpForce, ForceMode.Impulse);
-            player.UseStamina(jumpStamina);
+            Jump();
         }
     }
 

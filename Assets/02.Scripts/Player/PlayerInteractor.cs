@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    Camera cam;
     Player player;
 
     [Header("Interactor Settings")]
@@ -17,7 +16,6 @@ public class PlayerInteractor : MonoBehaviour
     public void Init(Player player)
     {
         this.player = player;
-        cam = Camera.main;
     }
 
     void Update()

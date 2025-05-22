@@ -15,12 +15,15 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] float regenStamina;
     [SerializeField] float regenRate;
 
+    public float Stamina { get => stamina; }
+
     [Header("MovementStats")]
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpForce;
+    [SerializeField] int maxJumpCount = 1;
     public float MoveSpeed { get => moveSpeed; }
     public float JumpForce { get => jumpForce; }
-
+    public int MaxJumpCount { get => maxJumpCount; }
     bool isDie = false;
 
     public void Init(Player player)
@@ -69,6 +72,11 @@ public class PlayerStats : MonoBehaviour
     public void ChangeJumpForce(float value)
     {
         jumpForce += value;
+    }
+
+    public void ChangeJumpCount(float value)
+    {
+        maxJumpCount += (int)value;
     }
 
     void Die()

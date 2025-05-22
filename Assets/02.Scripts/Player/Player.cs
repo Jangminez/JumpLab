@@ -59,6 +59,10 @@ public class Player : MonoBehaviour
             case StatType.Jump:
                 playerStats.ChangeJumpForce(value);
                 break;
+
+            case StatType.DoubleJump:
+                playerStats.ChangeJumpCount(value);
+                break;
         }
     }
 }
