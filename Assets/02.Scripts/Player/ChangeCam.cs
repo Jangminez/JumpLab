@@ -6,7 +6,7 @@ public class ChangeCam : MonoBehaviour
     [SerializeField] Transform firstPersonTr;
     [SerializeField] Transform thirdPersonTr;
 
-    [SerializeField] float duration = 0.8f;
+    [SerializeField] float duration = 0.5f;
 
     private Transform mainCam;
     private bool isFirstPerson = true;
@@ -31,6 +31,9 @@ public class ChangeCam : MonoBehaviour
         isFirstPerson = !isFirstPerson;
         Transform target = isFirstPerson ? firstPersonTr : thirdPersonTr;
 
+        Vector3 startPos = mainCam.position;
+        Quaternion startRot = mainCam.rotation;
+
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -38,8 +41,8 @@ public class ChangeCam : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
 
-            mainCam.position = Vector3.Lerp(mainCam.position, target.position, t);
-            mainCam.rotation = Quaternion.Slerp(mainCam.rotation, target.rotation, t);
+            mainCam.position = Vector3.Lerp(startPos, target.position, t);
+            mainCam.rotation = Quaternion.Slerp(startRot, target.rotation, t);
 
             yield return null;
         }
