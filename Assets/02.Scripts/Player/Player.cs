@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     public void TakeDamaged(float value)
     {
         playerStats.ChangeHealth(-value);
+        Events.RaisedTakeDamaged();
     }
 
     public void InteractItem()

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,9 @@ public class UIManager : MonoBehaviour
     [Header("PlayerUI")]
     [SerializeField] Image hpBar;
     [SerializeField] Image staminaBar;
+    [SerializeField] Image indicator;
+    [SerializeField] float flashSpeed;
+    private Coroutine indicatorCoroutine;
 
     [Header("Item UI")]
     [SerializeField] GameObject itemInfoUI;
@@ -24,6 +28,7 @@ public class UIManager : MonoBehaviour
 
         player.Events.onHealthChanged += UpdateHealthUI;
         player.Events.onStaminaChanged += UpdateStaminaUI;
+        player.Events.onTakeDamaged += Flash;
         player.Events.onInteractable += UpdateItemInfoUI;
     }
 
@@ -31,6 +36,7 @@ public class UIManager : MonoBehaviour
     {
         player.Events.onHealthChanged -= UpdateHealthUI;
         player.Events.onStaminaChanged -= UpdateStaminaUI;
+        player.Events.onTakeDamaged -= Flash;
         player.Events.onInteractable -= UpdateItemInfoUI;
     }
 
@@ -56,5 +62,30 @@ public class UIManager : MonoBehaviour
 
         itemNameText.text = itemName;
         itemDescriptionText.text = description;
+    }
+
+    public void Flash()
+    {
+        if (indicatorCoroutine != null)
+            StopCoroutine(indicatorCoroutine);
+
+        indicator.enabled = true;
+        indicator.color = new Color(1f, 100f / 255f, 100f / 255f);
+        indicatorCoroutine = StartCoroutine(FadeAway());
+    }
+
+    IEnumerator FadeAway()
+    {
+        float startAlpha = 0.3f;
+        float a = startAlpha;
+
+        while (a > 0)
+        {
+            a -= (startAlpha / flashSpeed) * Time.deltaTime;
+            indicator.color = new Color(1f, 100f / 255f, 100f / 255f, a);
+            yield return null;
+        }
+
+        indicator.enabled = false;
     }
 }

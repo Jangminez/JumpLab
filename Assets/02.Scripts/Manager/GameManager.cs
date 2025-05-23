@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private UIManager uIManager;
-    [SerializeField] private ItemManager itemManager;
     private Player player;
     private ToolBar toolBar;
     private ItemData itemDataSO;
