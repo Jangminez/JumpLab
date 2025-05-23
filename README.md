@@ -17,8 +17,6 @@
 - **아이템 UI 표시:** 선택한 아이템의 프리팹을 화면에 보여주고, 아이템 정보를 UI에 표시  
 - **Input System 연동:** 숫자키로 슬롯 선택 가능
 
-https://github.com/user-attachments/assets/827de22b-191f-41fc-9848-54751f613845
-
 ### 2. 플레이어
 - **PlayerController**: PlayerInput을 통해 플레이어의 조작을 관리 (이동, 점프, 상호작용 등)
 - **PlayerStats**: 플레이어의 스탯을 관리
@@ -37,3 +35,13 @@ https://github.com/user-attachments/assets/827de22b-191f-41fc-9848-54751f613845
 - **MovingPlatform:** 설정된 구간을 반복 이동하며, 플랫폼 위에 있는 Rigidbody 오브젝트를 함께 이동시킴
 
 ---
+
+
+
+https://github.com/user-attachments/assets/a9f29947-0be6-4554-b26f-bdc8bb6537a2
+
+
+
+https://github.com/user-attachments/assets/7811bb2f-b408-4496-8493-0f4e38817b1e
+
+
